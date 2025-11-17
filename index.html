@@ -5,7 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    :root {
+      --stripone: #6B46C1;
+      --striptwo: #10B981;
+      --stripthree: #3B82F6;
+    }
+    
+    .color-strip {
+      display: flex;
+      justify-content: space-between;
+      width: 95%;
+      animation: blinker 1s linear infinite;
+      height: 40px;
+      margin-bottom: 20px;
+      margin-top: 150px;
+    }
+    
+    @keyframes blinker {
+      0% {
+        opacity: 0;
+      }
+      49% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    .color-block {
+      width: 34%;
+      height: 25px;
+    }
+    
+    .red {
+      background: var(--stripone);
+    }
+    
+    .green {
+      background: var(--striptwo);
+    }
+    
+    .blue {
+      background: var(--stripthree);
+    }
+  </style>
 </head>
 <body class="bg-[#e8e8e8] flex justify-center">
 
@@ -53,44 +102,42 @@
       <!-- Ticket Information -->
       <h2 class="text-4xl font-bold tracking-tight mb-2">INTRASTATE</h2>
       <div class="text-6xl font-bold my-4">1</div>
-      <!-- <h3 class="text-3xl font-bold mb-2">ZONE RIDE</h3>
-        -->
       <h3 class="text-lg font-semibold mb-2">ZONE RIDE</h3>
-      <!-- <p class="text-2xl mb-8">1 Child*</p> -->
+      <h3 class="text-lg font-semibold mb-2">1 Adult</h3>
       
-      <!-- Progress Bar -->
-      <div class="w-full bg-gray-200 rounded-full h-8 overflow-hidden mb-4">
-        <div class="h-full flex">
-          <div class="w-1/3 bg-gradient-to-r from-purple-600 to-purple-500"></div>
-          <div class="w-2/3 bg-gradient-to-r from-purple-500 to-pink-400"></div>
-        </div>
+      <!-- Color Strip Bars -->
+      <div class="color-strip">
+        <div class="color-block red"></div>
+        <div class="color-block green"></div>
+        <div class="color-block blue"></div>
       </div>
       
       <!-- Timer -->
-<h3 class="text-2xl font-bold mb-4 mt-[150px]" id="timer">Expires in 30:00</h3>
+      <h3 class="text-2xl font-bold mb-4 mt-[0px]" id="timer">Expires in 30:00</h3>
 
-<script>
-  let totalSeconds = 30 * 60; // 30 minutes in seconds
-  
-  function updateTimer() {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    
-    // Format with leading zeros
-    const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    document.getElementById('timer').textContent = `Expires in ${formattedTime}`;
-    
-    if (totalSeconds > 0) {
-      totalSeconds--;
-    } else {
-      document.getElementById('timer').textContent = 'Expired';
-    }
-  }
-  
-  // Update immediately and then every second
-  updateTimer();
-  setInterval(updateTimer, 1000);
-</script>
+      <script>
+        let totalSeconds = 30 * 60; // 30 minutes in seconds
+        
+        function updateTimer() {
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+          
+          // Format with leading zeros
+          const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+          document.getElementById('timer').textContent = `Expires in ${formattedTime}`;
+          
+          if (totalSeconds > 0) {
+            totalSeconds--;
+          } else {
+            document.getElementById('timer').textContent = 'Expired';
+          }
+        }
+        
+        // Update immediately and then every second
+        updateTimer();
+        setInterval(updateTimer, 1000);
+      </script>
+      
       <!-- Link -->
       <a href="#" class="text-[15px] underline mt-auto -mb-[25px]">View Onboard Validator Instructions</a>
     </div>
