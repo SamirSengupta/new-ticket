@@ -2,35 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-
-  <!-- REQUIRED for full-screen on iPhones with a notch -->
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="stylesheet" href="color.css">
-
   <style>
-    /* SAFE AREA FIX */
-    body {
-      margin: 0;
-      background: #e8e8e8;
-    }
-
-    /* Header fills full screen top INCLUDING behind notch */
-    .full-header {
-      position: relative;
-      height: calc(270px + env(safe-area-inset-top));
-      padding-top: env(safe-area-inset-top);
-      background: #3b7ac1;
-      border-bottom-left-radius: 15px;
-      border-bottom-right-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-    }
-
     .color-strip {
       display: flex;
       justify-content: space-between;
@@ -38,16 +15,24 @@
       animation: blinker 1s linear infinite;
       height: 40px;
       margin-bottom: 20px;
-      margin-top: 20px;
+      margin-top: 20px; /* restore original */
       position: relative;
-      top: 120px;
+      top: 120px; /* move down visually WITHOUT affecting the white card's height */
     }
 
     @keyframes blinker {
-      0% { opacity: 0; }
-      49% { opacity: 0; }
-      50% { opacity: 1; }
-      100% { opacity: 1; }
+      0% {
+        opacity: 0;
+      }
+      49% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+      }
     }
 
     .color-block {
@@ -55,34 +40,37 @@
       height: 20px;
     }
 
-    .red { background: var(--stripone); }
-    .green { background: var(--striptwo); }
-    .blue { background: var(--stripthree); }
+    .red {
+      background: var(--stripone);
+    }
+
+    .green {
+      background: var(--striptwo);
+    }
+
+    .blue {
+      background: var(--stripthree);
+    }
 
     .qr-container {
       background: var(--first);
     }
   </style>
 </head>
-
-<body class="flex justify-center">
-  <div class="w-full max-w-md min-h-screen relative">
-
-    <!-- HEADER BEHIND NOTCH -->
-    <div class="full-header">
-
+<body class="bg-[#e8e8e8] flex justify-center">
+  <div class="w-full max-w-md min-h-screen bg-[#e8e8e8] relative">
+    <!-- Top Blue Header -->
+    <div class="bg-[#3b7ac1] h-72 rounded-b-[15px] relative shadow-lg">
       <!-- Back Arrow -->
-      <div class="absolute left-4 top-[20px] text-white text-2xl cursor-pointer">
+      <div class="absolute left-4 top-[15px] text-white text-2xl cursor-pointer">
         ‹
       </div>
-
       <!-- Title -->
-      <h1 class="text-white text-base font-bold text-center pt-[40px]">
+      <h1 class="text-white text-base font-bold text-center pt-[20px]">
         One Way Ticket
       </h1>
     </div>
-
-    <!-- White Card -->
+    <!-- White Card with Large Radius -->
     <div class="
       bg-white 
       w-[90%] 
@@ -98,22 +86,23 @@
       flex-col
       items-center
     ">
-
-      <!-- QR -->
+      <!-- QR Code Section -->
       <div class="qr-container rounded-lg p-3 -mt-2">
         <img src="qr.png" alt="QR Code" class="w-[150px] h-[150px] rounded-lg" />
       </div>
 
       <p class="text-gray-600 text-sm -mt-[2px]">Tap to enlarge</p>
 
+      <!-- Dashed Line -->
       <div class="w-full border-t-2 border-dashed border-gray-300 mt-[5px] mb-6"></div>
 
+      <!-- Ticket Information -->
       <h2 class="text-4xl font-bold tracking-tight mb-2">INTRASTATE</h2>
       <div class="text-6xl font-bold my-4">1</div>
       <h3 class="text-lg font-semibold mb-2">ZONE RIDE</h3>
       <h3 class="text-lg font-semibold mb-2">1 Adult</h3>
 
-      <!-- Color Strip -->
+      <!-- Color Strip Bars -->
       <div class="color-strip">
         <div class="color-block red"></div>
         <div class="color-block green"></div>
@@ -124,22 +113,30 @@
       <h3 class="text-2xl font-bold mb-4 mt-[100px]" id="timer">Expires in 30:00</h3>
 
       <script>
-        let totalSeconds = 30 * 60;
+        let totalSeconds = 30 * 60; // 30 minutes in seconds
+
         function updateTimer() {
-          const m = Math.floor(totalSeconds / 60);
-          const s = totalSeconds % 60;
-          document.getElementById('timer').textContent =
-            `Expires in ${m}:${s.toString().padStart(2,'0')}`;
-          if (totalSeconds > 0) totalSeconds--;
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+
+          // Format with leading zeros
+          const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+          document.getElementById('timer').textContent = `Expires in ${formattedTime}`;
+
+          if (totalSeconds > 0) {
+            totalSeconds--;
+          } else {
+            document.getElementById('timer').textContent = 'Expired';
+          }
         }
+
+        // Update immediately and then every second
         updateTimer();
         setInterval(updateTimer, 1000);
       </script>
 
-      <a href="#" class="text-[15px] underline mt-auto -mb-[25px]">
-        View Onboard Validator Instructions
-      </a>
-
+      <!-- Link -->
+      <a href="#" class="text-[15px] underline mt-auto -mb-[25px]">View Onboard Validator Instructions</a>
     </div>
   </div>
 </body>
