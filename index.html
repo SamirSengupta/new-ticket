@@ -6,26 +6,20 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="color.css">
   <style>
-    :root {
-      --stripone: #6B46C1;
-      --striptwo: #10B981;
-      --stripthree: #3B82F6;
-    }
     .color-strip {
-    display: flex;
-    justify-content: space-between;
-    width: 95%;
-    animation: blinker 1s linear infinite;
-    height: 40px;
-    margin-bottom: 20px;
-    margin-top: 20px; /* restore original */
-    position: relative;
-    top: 120px; /* move down visually WITHOUT affecting the white card's height */
+      display: flex;
+      justify-content: space-between;
+      width: 95%;
+      animation: blinker 1s linear infinite;
+      height: 40px;
+      margin-bottom: 20px;
+      margin-top: 20px; /* restore original */
+      position: relative;
+      top: 120px; /* move down visually WITHOUT affecting the white card's height */
     }
 
-
-    
     @keyframes blinker {
       0% {
         opacity: 0;
@@ -40,22 +34,26 @@
         opacity: 1;
       }
     }
-    
+
     .color-block {
-      width: 34%;
-      height: 25px;
+      width: 80%;
+      height: 20px;
     }
-    
+
     .red {
       background: var(--stripone);
     }
-    
+
     .green {
       background: var(--striptwo);
     }
-    
+
     .blue {
       background: var(--stripthree);
+    }
+
+    .qr-container {
+      background: var(--first);
     }
   </style>
 </head>
@@ -68,7 +66,7 @@
         ‹
       </div>
       <!-- Title -->
-       <h1 class="text-white text-base font-bold text-center pt-[20px]">
+      <h1 class="text-white text-base font-bold text-center pt-[20px]">
         One Way Ticket
       </h1>
     </div>
@@ -88,54 +86,55 @@
       flex-col
       items-center
     ">
-        <!-- QR Code Section -->
-        <div class="bg-[#C084C0] rounded-lg p-3 -mt-2">
-         <img src="qr.png" alt="QR Code" class="w-[150px] h-[150px] rounded-lg" />
-        </div>
+      <!-- QR Code Section -->
+      <div class="qr-container rounded-lg p-3 -mt-2">
+        <img src="qr.png" alt="QR Code" class="w-[150px] h-[150px] rounded-lg" />
+      </div>
 
-        <p class="text-gray-600 text-sm -mt-[2px]">Tap to enlarge</p>
-      
+      <p class="text-gray-600 text-sm -mt-[2px]">Tap to enlarge</p>
+
       <!-- Dashed Line -->
-     <div class="w-full border-t-2 border-dashed border-gray-300 mt-[5px] mb-6"></div>
-      
+      <div class="w-full border-t-2 border-dashed border-gray-300 mt-[5px] mb-6"></div>
+
       <!-- Ticket Information -->
       <h2 class="text-4xl font-bold tracking-tight mb-2">INTRASTATE</h2>
       <div class="text-6xl font-bold my-4">1</div>
       <h3 class="text-lg font-semibold mb-2">ZONE RIDE</h3>
-      
+      <h3 class="text-lg font-semibold mb-2">1 Adult</h3>
+
       <!-- Color Strip Bars -->
       <div class="color-strip">
         <div class="color-block red"></div>
         <div class="color-block green"></div>
         <div class="color-block blue"></div>
       </div>
-      
+
       <!-- Timer -->
       <h3 class="text-2xl font-bold mb-4 mt-[100px]" id="timer">Expires in 30:00</h3>
 
       <script>
         let totalSeconds = 30 * 60; // 30 minutes in seconds
-        
+
         function updateTimer() {
           const minutes = Math.floor(totalSeconds / 60);
           const seconds = totalSeconds % 60;
-          
+
           // Format with leading zeros
           const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
           document.getElementById('timer').textContent = `Expires in ${formattedTime}`;
-          
+
           if (totalSeconds > 0) {
             totalSeconds--;
           } else {
             document.getElementById('timer').textContent = 'Expired';
           }
         }
-        
+
         // Update immediately and then every second
         updateTimer();
         setInterval(updateTimer, 1000);
       </script>
-      
+
       <!-- Link -->
       <a href="#" class="text-[15px] underline mt-auto -mb-[25px]">View Onboard Validator Instructions</a>
     </div>
