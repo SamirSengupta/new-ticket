@@ -17,7 +17,7 @@
       </div>
 
       <!-- Title -->
-      <h1 class="text-white text-text-base font-bold text-center pt-10">
+      <h1 class="text-white text-base font-bold text-center pt-10">
         One Way Ticket
       </h1>
     </div>
@@ -33,8 +33,40 @@
       shadow-[0_20px_40px_rgba(0,0,0,0.15)]
       relative
       z-10
+      p-8
+      flex
+      flex-col
+      items-center
     ">
-      <!-- Content goes here -->
+        <!-- QR Code Section -->
+        <div class="bg-[#C084C0] rounded-lg p-2 -mt-0">
+         <img src="qr.png" alt="QR Code" class="w-[90px] h-[90px] rounded-lg" />
+        </div>
+
+<p class="text-gray-600 text-sm -mt-[2px]">Tap to enlarge</p>
+      
+      <!-- Dashed Line -->
+     <div class="w-full border-t-2 border-dashed border-gray-300 mt-[5px] mb-6"></div>
+      
+      <!-- Ticket Information -->
+      <h2 class="text-4xl font-bold tracking-tight mb-2">INTRASTATE</h2>
+      <div class="text-8xl font-bold my-4">1</div>
+      <h3 class="text-3xl font-bold mb-2">ZONE RIDE</h3>
+      <p class="text-2xl mb-8">1 Child*</p>
+      
+      <!-- Progress Bar -->
+      <div class="w-full bg-gray-200 rounded-full h-8 overflow-hidden mb-4">
+        <div class="h-full flex">
+          <div class="w-1/3 bg-gradient-to-r from-purple-600 to-purple-500"></div>
+          <div class="w-2/3 bg-gradient-to-r from-purple-500 to-pink-400"></div>
+        </div>
+      </div>
+      
+      <!-- Timer -->
+      <h3 class="text-3xl font-bold mb-4">Expires in 29:56</h3>
+      
+      <!-- Link -->
+      <a href="#" class="text-lg underline">View Onboard Validator Instructions</a>
     </div>
 
   </div>
