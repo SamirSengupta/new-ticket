@@ -63,8 +63,30 @@
       </div>
       
       <!-- Timer -->
-      <h3 class="text-3xl font-bold mb-4">Expires in 29:56</h3>
-      
+<h3 class="text-2xl font-bold mb-4 mt-[150px]" id="timer">Expires in 30:00</h3>
+
+<script>
+  let totalSeconds = 30 * 60; // 30 minutes in seconds
+  
+  function updateTimer() {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    
+    // Format with leading zeros
+    const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    document.getElementById('timer').textContent = `Expires in ${formattedTime}`;
+    
+    if (totalSeconds > 0) {
+      totalSeconds--;
+    } else {
+      document.getElementById('timer').textContent = 'Expired';
+    }
+  }
+  
+  // Update immediately and then every second
+  updateTimer();
+  setInterval(updateTimer, 1000);
+</script>
       <!-- Link -->
       <a href="#" class="text-[15px] underline mt-auto -mb-[25px]">View Onboard Validator Instructions</a>
     </div>
