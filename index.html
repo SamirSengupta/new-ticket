@@ -12,16 +12,19 @@
       --striptwo: #10B981;
       --stripthree: #3B82F6;
     }
-    
     .color-strip {
-      display: flex;
-      justify-content: space-between;
-      width: 95%;
-      animation: blinker 1s linear infinite;
-      height: 40px;
-      margin-bottom: 20px;
-      margin-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    animation: blinker 1s linear infinite;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-top: 20px; /* restore original */
+    position: relative;
+    top: 120px; /* move down visually WITHOUT affecting the white card's height */
     }
+
+
     
     @keyframes blinker {
       0% {
@@ -57,22 +60,18 @@
   </style>
 </head>
 <body class="bg-[#e8e8e8] flex justify-center">
-
   <div class="w-full max-w-md min-h-screen bg-[#e8e8e8] relative">
-
     <!-- Top Blue Header -->
     <div class="bg-[#3b7ac1] h-72 rounded-b-[15px] relative shadow-lg">
       <!-- Back Arrow -->
       <div class="absolute left-4 top-[15px] text-white text-2xl cursor-pointer">
-        ‹ 
+        ‹
       </div>
-
       <!-- Title -->
        <h1 class="text-white text-base font-bold text-center pt-[20px]">
         One Way Ticket
       </h1>
     </div>
-
     <!-- White Card with Large Radius -->
     <div class="
       bg-white 
@@ -94,7 +93,7 @@
          <img src="qr.png" alt="QR Code" class="w-[150px] h-[150px] rounded-lg" />
         </div>
 
-<p class="text-gray-600 text-sm -mt-[2px]">Tap to enlarge</p>
+        <p class="text-gray-600 text-sm -mt-[2px]">Tap to enlarge</p>
       
       <!-- Dashed Line -->
      <div class="w-full border-t-2 border-dashed border-gray-300 mt-[5px] mb-6"></div>
@@ -103,7 +102,6 @@
       <h2 class="text-4xl font-bold tracking-tight mb-2">INTRASTATE</h2>
       <div class="text-6xl font-bold my-4">1</div>
       <h3 class="text-lg font-semibold mb-2">ZONE RIDE</h3>
-      <h3 class="text-lg font-semibold mb-2">1 Adult</h3>
       
       <!-- Color Strip Bars -->
       <div class="color-strip">
@@ -113,7 +111,7 @@
       </div>
       
       <!-- Timer -->
-      <h3 class="text-2xl font-bold mb-4 mt-[0px]" id="timer">Expires in 30:00</h3>
+      <h3 class="text-2xl font-bold mb-4 mt-[100px]" id="timer">Expires in 30:00</h3>
 
       <script>
         let totalSeconds = 30 * 60; // 30 minutes in seconds
@@ -141,8 +139,6 @@
       <!-- Link -->
       <a href="#" class="text-[15px] underline mt-auto -mb-[25px]">View Onboard Validator Instructions</a>
     </div>
-
   </div>
-
 </body>
 </html>
