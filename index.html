@@ -31,13 +31,48 @@
     .color-strip {
       display: flex;
       justify-content: space-between;
-      width: 95%;
+      width: 70%;
       animation: blinker 1s linear infinite;
       height: 40px;
       margin-bottom: 20px;
       margin-top: 20px;
       position: relative;
       top: 120px;
+    }
+
+    .strip-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 95%;
+      position: relative;
+      top: 120px;
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+
+    .color-strip {
+      width: 100%;
+      top: 0;
+      margin: 0;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 5px;
+      background-color: #e0e0e0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #2196F3;
+      border-radius: 3px;
+      transition: width 1s linear;
     }
 
     @keyframes blinker {
@@ -109,7 +144,7 @@
     ">
       <!-- QR Code -->
       <div class="qr-container rounded-lg p-3 -mt-2">
-        <img src="qr.png" alt="QR Code" class="w-[150px] h-[150px] rounded-lg" />
+        <img src="qr.png" alt="QR Code" class="w-[150px] h-[150px]" />
       </div>
 
       <p class="text-gray-600 text-sm -mt-[2px]">Tap to enlarge</p>
@@ -118,29 +153,72 @@
       <div class="w-full border-t-2 border-dashed border-gray-300 mt-[5px] mb-6"></div>
 
       <!-- Ticket Info -->
-      <h2 class="text-4xl font-bold tracking-tight mb-2 text">INTRASTATE</h2>
-      <div class="text-6xl font-bold my-4">1</div>
+      <h2 class="text-4xl font-bold tracking-tight mb-2 cursor-pointer" id="stateType" onclick="toggleState()">
+        INTRASTATE</h2>
+      <div class="text-6xl font-bold my-4 cursor-pointer" id="zoneNumber" onclick="cycleZone()">1</div>
       <h3 class="text-lg font-semibold mb-2">ZONE RIDE</h3>
       <h3 class="text-lg font-semibold mb-2">1 Adult</h3>
 
-      <!-- Color Strip -->
-      <div class="color-strip">
-        <div class="color-block red"></div>
-        <div class="color-block green"></div>
-        <div class="color-block blue"></div>
+      <script>
+        // Toggle between INTRASTATE and INTERSTATE
+        let isIntrastate = true;
+        function toggleState() {
+          const stateEl = document.getElementById('stateType');
+          isIntrastate = !isIntrastate;
+          if (isIntrastate) {
+            stateEl.textContent = 'INTRASTATE';
+            stateEl.style.color = 'black';
+          } else {
+            stateEl.textContent = 'INTERSTATE';
+            stateEl.style.color = '#e53935';
+          }
+        }
+
+        // Cycle zone number 1 → 2 → 3 → 1
+        let currentZone = 1;
+        function cycleZone() {
+          currentZone = currentZone >= 3 ? 1 : currentZone + 1;
+          document.getElementById('zoneNumber').textContent = currentZone;
+          // Reset timer based on zone
+          if (currentZone === 3) {
+            initialSeconds = 60 * 60; // 1 hour for zone 3
+          } else {
+            initialSeconds = 30 * 60; // 30 minutes for zones 1-2
+          }
+          totalSeconds = initialSeconds;
+          document.getElementById('progressBar').style.width = '0%';
+        }
+      </script>
+
+      <!-- Color Strip and Progress Bar -->
+      <div class="strip-container">
+        <div class="color-strip">
+          <div class="color-block red"></div>
+          <div class="color-block green"></div>
+          <div class="color-block blue"></div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
       </div>
 
       <!-- Timer -->
-      <h3 class="text-2xl font-bold mb-4 mt-[100px]" id="timer">Expires in 60:00</h3>
+      <h3 class="text-2xl font-bold mb-4 mt-[100px]" id="timer">Expires in 30:00</h3>
 
       <script>
-        let totalSeconds = 30 * 60; // 60 minutes in seconds
+        let initialSeconds = 30 * 60; // 30 minutes in seconds
+        let totalSeconds = initialSeconds;
 
         function updateTimer() {
           const minutes = Math.floor(totalSeconds / 60);
           const seconds = totalSeconds % 60;
           const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
           document.getElementById('timer').textContent = `Expires in ${formattedTime}`;
+
+          // Update progress bar - fills as time decreases
+          const progressPercent = ((initialSeconds - totalSeconds) / initialSeconds) * 100;
+          document.getElementById('progressBar').style.width = progressPercent + '%';
+
           if (totalSeconds > 0) totalSeconds--;
           else document.getElementById('timer').textContent = 'Expired';
         }
